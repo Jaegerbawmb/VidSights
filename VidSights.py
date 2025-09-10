@@ -12,8 +12,8 @@ import datetime
 pio.templates.default = "plotly_dark"
 
 
-API_KEY = "AIzaSyDCtXQjq2-YSuBu9S9b0W6QSYP2r5FNiMQ"
-CHANNEL_ID = "UCYUQQgogVeQY8cMQamhHJcg"
+API_KEY = "YOUR_API_KEY"
+CHANNEL_ID = "YOUR_CHANNEL_ID"
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # STEP 2: Fetch Video List
