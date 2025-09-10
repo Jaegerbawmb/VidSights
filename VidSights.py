@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
@@ -16,7 +15,7 @@ API_KEY = "YOUR_API_KEY"
 CHANNEL_ID = "YOUR_CHANNEL_ID"
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
-# STEP 2: Fetch Video List
+
 def get_channel_videos(channel_id):
     video_list = []
     next_page_token = None
@@ -41,7 +40,7 @@ def get_channel_videos(channel_id):
             break
     return pd.DataFrame(video_list)
 
-# STEP 3: Fetch Video Statistics
+
 def get_video_stats(video_ids):
     stats_list = []
     for i in range(0, len(video_ids), 50):
@@ -60,14 +59,12 @@ def get_video_stats(video_ids):
             })
     return pd.DataFrame(stats_list)
 
-# --- All Data Fetching and Processing is done here, before the app starts ---
 videos_df = get_channel_videos(CHANNEL_ID)
 stats_df = get_video_stats(videos_df['Video_ID'].tolist())
 data = pd.merge(videos_df, stats_df, on='Video_ID')
 data['Like_Ratio'] = data['Likes'] / data['Views']
 data['Comment_Ratio'] = data['Comments'] / data['Views']
 
-# Pre-calculate all the static plot figures with explicit dimensions
 monthly_data = data.groupby(data['Published_Date'].dt.tz_localize(None).dt.to_period('M'))[['Views', 'Likes', 'Comments']].sum().reset_index()
 monthly_data['Published_Date'] = monthly_data['Published_Date'].astype(str)
 
@@ -82,8 +79,8 @@ monthly_trends_fig = go.Figure(
         xaxis_title='Month',
         yaxis_title='Count',
         template='plotly_dark',
-        height=400,  # Fixed height
-        autosize=False  # Disable auto-sizing
+        height=400,  
+        autosize=False  
     )
 )
 
@@ -94,7 +91,7 @@ views_likes_fig = px.scatter(
     hover_data=['Title'],
     title='Views vs. Likes'
 )
-views_likes_fig.update_layout(height=400, autosize=False)  # Fixed height
+views_likes_fig.update_layout(height=400, autosize=False)  
 
 corr_df = data[['Views', 'Likes', 'Comments', 'Like_Ratio', 'Comment_Ratio']].corr()
 correlation_heatmap_fig = px.imshow(
@@ -103,9 +100,8 @@ correlation_heatmap_fig = px.imshow(
     color_continuous_scale='Viridis',
     title='Engagement Metrics Correlation'
 )
-correlation_heatmap_fig.update_layout(height=400, autosize=False)  # Fixed height
+correlation_heatmap_fig.update_layout(height=400, autosize=False)  
 
-# Dash App
 app = dash.Dash(__name__)
 
 app.layout = html.Div(
@@ -113,8 +109,8 @@ app.layout = html.Div(
         'backgroundColor': '#1E1E1E', 
         'color': 'white', 
         'fontFamily': 'Arial, sans-serif',
-        'minHeight': '100vh',  # Prevent infinite expansion
-        'overflow': 'auto'     # Handle content overflow properly
+        'minHeight': '100vh',  
+        'overflow': 'auto'     
     }, 
     children=[
         html.H1(
@@ -131,8 +127,8 @@ app.layout = html.Div(
             style={
                 'display': 'flex', 
                 'padding': '20px',
-                'minHeight': '450px',  # Fixed minimum height for the row
-                'maxHeight': '500px'   # Maximum height to prevent expansion
+                'minHeight': '450px',  
+                'maxHeight': '500px'  
             }, 
             children=[
                 html.Div(
@@ -140,7 +136,7 @@ app.layout = html.Div(
                     style={
                         'width': '50%', 
                         'paddingRight': '10px',
-                        'height': '450px'  # Fixed height for container
+                        'height': '450px' 
                     }, 
                     children=[
                         html.H3('Video-Specific Metrics', style={'textAlign': 'center'}),
@@ -163,7 +159,7 @@ app.layout = html.Div(
                             id='engagement-graph',
                             style={
                                 'marginTop': '20px',
-                                'height': '350px'  # Fixed height for the graph
+                                'height': '350px'  
                             }
                         ),
                     ]
@@ -174,7 +170,7 @@ app.layout = html.Div(
                     style={
                         'width': '50%', 
                         'paddingLeft': '10px',
-                        'height': '450px'  # Fixed height for container
+                        'height': '450px' 
                     }, 
                     children=[
                         html.H3('Monthly Engagement Trends', style={'textAlign': 'center'}),
@@ -182,10 +178,10 @@ app.layout = html.Div(
                             id='monthly-trends-graph',
                             style={
                                 'marginTop': '20px',
-                                'height': '400px'  # Fixed height for the graph
+                                'height': '400px' 
                             },
                             figure=monthly_trends_fig,
-                            config={'responsive': False}  # Disable responsive behavior
+                            config={'responsive': False} 
                         ),
                     ]
                 ),
@@ -197,8 +193,8 @@ app.layout = html.Div(
             style={
                 'display': 'flex', 
                 'padding': '20px',
-                'minHeight': '450px',  # Fixed minimum height for the row
-                'maxHeight': '500px'   # Maximum height to prevent expansion
+                'minHeight': '450px', 
+                'maxHeight': '500px'   
             }, 
             children=[
                 html.Div(
@@ -206,7 +202,7 @@ app.layout = html.Div(
                     style={
                         'width': '50%', 
                         'paddingRight': '10px',
-                        'height': '450px'  # Fixed height for container
+                        'height': '450px'  
                     }, 
                     children=[
                         html.H3('Views vs. Likes', style={'textAlign': 'center'}),
@@ -214,10 +210,10 @@ app.layout = html.Div(
                             id='views-likes-graph',
                             style={
                                 'marginTop': '20px',
-                                'height': '400px'  # Fixed height for the graph
+                                'height': '400px'
                             },
                             figure=views_likes_fig,
-                            config={'responsive': False}  # Disable responsive behavior
+                            config={'responsive': False} 
                         ),
                     ]
                 ),
@@ -226,7 +222,7 @@ app.layout = html.Div(
                     style={
                         'width': '50%', 
                         'paddingLeft': '10px',
-                        'height': '450px'  # Fixed height for container
+                        'height': '450px'  
                     }, 
                     children=[
                         html.H3('Metric Correlation', style={'textAlign': 'center'}),
@@ -234,10 +230,10 @@ app.layout = html.Div(
                             id='correlation-heatmap',
                             style={
                                 'marginTop': '20px',
-                                'height': '400px'  # Fixed height for the graph
+                                'height': '400px' 
                             },
                             figure=correlation_heatmap_fig,
-                            config={'responsive': False}  # Disable responsive behavior
+                            config={'responsive': False}  
                         ),
                     ]
                 ),
@@ -246,7 +242,6 @@ app.layout = html.Div(
     ]
 )
 
-# This is the only callback you need. It updates the bar chart based on the dropdowns.
 @app.callback(
     Output('engagement-graph', 'figure'),
     [Input('video-dropdown', 'value'),
@@ -278,7 +273,7 @@ def update_graph(selected_title, selected_type):
             title=f'Engagement Ratios for "{selected_title}"'
         )
     
-    # Set fixed dimensions for the callback-generated figure
+
     fig.update_layout(
         height=350, 
         autosize=False,
@@ -290,6 +285,5 @@ def update_graph(selected_title, selected_type):
     )
     return fig
 
-# Run the app
 if __name__ == '__main__':
     app.run(debug=True)
