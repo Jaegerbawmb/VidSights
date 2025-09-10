@@ -37,7 +37,7 @@ Replace CHANNEL_ID with your target YouTube channel ID
 
 ## 🚀 Usage
 bashpython app.py
-Open your browser and navigate to http://127.0.0.1:8050
+Open your browser and navigate to the host url
 
 ## 📊 Dashboard Components
 
