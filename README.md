@@ -5,15 +5,22 @@ A comprehensive YouTube analytics dashboard that transforms raw video metrics in
 
 ## 🚀 Features
 📊 Interactive Video Metrics: Analyze individual video performance with raw metrics (views, likes, comments) and engagement ratios
+
 📈 Monthly Trends: Track channel performance over time with interactive line charts
+
 💙 Correlation Analysis: Visualize relationships between different engagement metrics through scatter plots and heatmaps
+
 🎯 Real-time Data: Fetch live data directly from YouTube Data API v3
+
 🌙 Modern Dark UI: Professional, card-based design with smooth interactions
 
 ## 🛠️ Tech Stack
 Backend: Python, Pandas
+
 Frontend: Dash, Plotly
+
 API: YouTube Data API v3
+
 Data Processing: Pandas, NumPy
 
 ## 📦 Installation
