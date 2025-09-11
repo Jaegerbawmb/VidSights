@@ -1,5 +1,6 @@
 # VidSights - YouTube Analytics Dashboard
 A comprehensive YouTube analytics dashboard that transforms raw video metrics into actionable insights through interactive visualizations and trend analysis.
+
 <img width="1881" height="800" alt="image" src="https://github.com/user-attachments/assets/136f46de-75d8-49e8-9694-916e4cb9b592" />
 <img width="1884" height="572" alt="image" src="https://github.com/user-attachments/assets/3cac67f3-4e49-43f8-8db4-83a923292039" />
 
