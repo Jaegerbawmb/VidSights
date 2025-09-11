@@ -69,11 +69,6 @@ Correlation matrix between all engagement metrics
 Color-coded visualization for easy pattern recognition
 Includes engagement ratios analysis
 
-## 🔧 Configuration
-API Setup
-pythonAPI_KEY = "your_youtube_api_key_here"
-CHANNEL_ID = "target_channel_id_here"
-
 ## Customization
 Modify color schemes in the Plotly templates
 Adjust chart dimensions in the layout configuration
